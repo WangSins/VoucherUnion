@@ -1,34 +1,28 @@
 package com.eshen.voucherunion.ui.activity;
 
-import android.os.Bundle;
 import android.widget.RadioGroup;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.eshen.voucherunion.R;
+import com.eshen.voucherunion.base.BaseActivity;
 import com.eshen.voucherunion.utils.LogUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Sin on 2020/5/2
  */
-public class TestActivity extends AppCompatActivity {
+public class TestActivity extends BaseActivity {
 
     @BindView(R.id.test_navigation_bar)
     public RadioGroup navigation;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
-        ButterKnife.bind(this);
-        initListener();
+    protected int getLayoutResId() {
+        return R.layout.activity_test;
     }
 
-    private void initListener() {
+    @Override
+    protected void initEvent() {
         navigation.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

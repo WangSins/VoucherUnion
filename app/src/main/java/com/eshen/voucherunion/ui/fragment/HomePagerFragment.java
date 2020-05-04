@@ -1,7 +1,9 @@
 package com.eshen.voucherunion.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
@@ -17,12 +19,14 @@ import com.eshen.voucherunion.base.BaseFragment;
 import com.eshen.voucherunion.model.domain.Categories;
 import com.eshen.voucherunion.model.domain.HomePagerContent;
 import com.eshen.voucherunion.presenter.ICategoryPagerPresenter;
-import com.eshen.voucherunion.presenter.impl.CategoryPagerPresenterImpl;
+import com.eshen.voucherunion.presenter.ITicketPresenter;
+import com.eshen.voucherunion.ui.activity.TicketActivity;
 import com.eshen.voucherunion.ui.adapter.HomePagerContentAdapter;
 import com.eshen.voucherunion.ui.adapter.LooperPagerAdapter;
 import com.eshen.voucherunion.ui.custom.AutoLoopViewPager;
 import com.eshen.voucherunion.utils.Constant;
 import com.eshen.voucherunion.utils.LogUtils;
+import com.eshen.voucherunion.utils.PresenterManager;
 import com.eshen.voucherunion.utils.SizeUtils;
 import com.eshen.voucherunion.utils.ToastUtils;
 import com.eshen.voucherunion.view.ICategoryPagerCallback;
@@ -127,6 +131,21 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @Override
     protected void initListener() {
+
+        contentAdapter.setOnListItemClickListener(new HomePagerContentAdapter.OnListItemClickListener() {
+            @Override
+            public void onItemClick(HomePagerContent.DataBean item) {
+                handleItemClick(item);
+            }
+        });
+
+        looperPagerAdapter.setOnLooperPagerItemClickListener(new LooperPagerAdapter.OnLooperPagerItemClickListener() {
+            @Override
+            public void onLooperItemClick(HomePagerContent.DataBean item) {
+                handleItemClick(item);
+            }
+        });
+
         homePagerParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -143,7 +162,6 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
                 }
             }
         });
-
 
         homeHeaderContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -192,6 +210,19 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
         });
     }
 
+    private void handleItemClick(HomePagerContent.DataBean item) {
+        String url = item.getCoupon_click_url();
+        if (TextUtils.isEmpty(url)) {
+            url = item.getClick_url();
+        }
+        String title = item.getTitle();
+        String cover = item.getPict_url();
+        //拿到TickerPresenter去加载数据
+        ITicketPresenter ticketPresenter = PresenterManager.getInstance().getTicketPresenter();
+        ticketPresenter.getTicket(url, title, cover);
+        startActivity(new Intent(getContext(), TicketActivity.class));
+    }
+
     /**
      * 切换指示器
      *
@@ -210,7 +241,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @Override
     protected void initPresenter() {
-        categoryPagerPresenter = CategoryPagerPresenterImpl.getInstance();
+        categoryPagerPresenter = PresenterManager.getInstance().getCategoryPagerPresenter();
         categoryPagerPresenter.registerViewCallback(this);
     }
 

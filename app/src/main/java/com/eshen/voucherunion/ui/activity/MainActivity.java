@@ -1,14 +1,13 @@
 package com.eshen.voucherunion.ui.activity;
 
-import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.eshen.voucherunion.R;
+import com.eshen.voucherunion.base.BaseActivity;
 import com.eshen.voucherunion.base.BaseFragment;
 import com.eshen.voucherunion.ui.fragment.HomeFragment;
 import com.eshen.voucherunion.ui.fragment.RedPacketFragment;
@@ -18,10 +17,8 @@ import com.eshen.voucherunion.utils.LogUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.main_navigation_bar)
     public BottomNavigationView navigationView;
@@ -29,26 +26,23 @@ public class MainActivity extends AppCompatActivity {
     private RedPacketFragment redPacketFragment;
     private SelectedFragment selectedFragment;
     private SearchFragment searchFragment;
-    private Unbinder bind;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        bind = ButterKnife.bind(this);
-        initFragment();
-        initListener();
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (bind != null) {
-            bind.unbind();
-        }
+    protected void initView() {
+        homeFragment = new HomeFragment();
+        redPacketFragment = new RedPacketFragment();
+        selectedFragment = new SelectedFragment();
+        searchFragment = new SearchFragment();
+        switchFragment(homeFragment);
     }
 
-    private void initListener() {
+    @Override
+    protected void initEvent() {
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -90,13 +84,5 @@ public class MainActivity extends AppCompatActivity {
         }
         lastOneFragment = targetFragment;
         transaction.commit();
-    }
-
-    private void initFragment() {
-        homeFragment = new HomeFragment();
-        redPacketFragment = new RedPacketFragment();
-        selectedFragment = new SelectedFragment();
-        searchFragment = new SearchFragment();
-        switchFragment(homeFragment);
     }
 }

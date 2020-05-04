@@ -10,8 +10,8 @@ import com.eshen.voucherunion.R;
 import com.eshen.voucherunion.base.BaseFragment;
 import com.eshen.voucherunion.model.domain.Categories;
 import com.eshen.voucherunion.presenter.IHomePresenter;
-import com.eshen.voucherunion.presenter.impl.HomePresenterImpl;
 import com.eshen.voucherunion.ui.adapter.HomePagerAdapter;
+import com.eshen.voucherunion.utils.PresenterManager;
 import com.eshen.voucherunion.view.IHomeCallback;
 import com.google.android.material.tabs.TabLayout;
 
@@ -52,7 +52,7 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
     @Override
     protected void initPresenter() {
         //创建presenter
-        homePresenter = new HomePresenterImpl();
+        homePresenter = PresenterManager.getInstance().getHomePresenter();
         homePresenter.registerViewCallback(this);
     }
 
