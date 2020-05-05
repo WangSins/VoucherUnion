@@ -2,9 +2,11 @@ package com.eshen.voucherunion.utils;
 
 import com.eshen.voucherunion.presenter.ICategoryPagerPresenter;
 import com.eshen.voucherunion.presenter.IHomePresenter;
+import com.eshen.voucherunion.presenter.IRecommendPagePresenter;
 import com.eshen.voucherunion.presenter.ITicketPresenter;
 import com.eshen.voucherunion.presenter.impl.CategoryPagerPresenterImpl;
 import com.eshen.voucherunion.presenter.impl.HomePresenterImpl;
+import com.eshen.voucherunion.presenter.impl.RecommendPagePresenterImpl;
 import com.eshen.voucherunion.presenter.impl.TicketPresenterImpl;
 
 /**
@@ -16,6 +18,7 @@ public class PresenterManager {
     private final ICategoryPagerPresenter categoryPagerPresenter;
     private final IHomePresenter homePresenter;
     private final ITicketPresenter ticketPresenter;
+    private final IRecommendPagePresenter recommendPagePresenter;
 
     public static PresenterManager getInstance() {
         return ourInstance;
@@ -25,6 +28,7 @@ public class PresenterManager {
         categoryPagerPresenter = new CategoryPagerPresenterImpl();
         homePresenter = new HomePresenterImpl();
         ticketPresenter = new TicketPresenterImpl();
+        recommendPagePresenter = new RecommendPagePresenterImpl();
     }
 
     public ICategoryPagerPresenter getCategoryPagerPresenter() {
@@ -37,5 +41,9 @@ public class PresenterManager {
 
     public ITicketPresenter getTicketPresenter() {
         return ticketPresenter;
+    }
+
+    public IRecommendPagePresenter getRecommendPagePresenter() {
+        return recommendPagePresenter;
     }
 }

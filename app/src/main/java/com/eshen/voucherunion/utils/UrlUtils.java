@@ -9,11 +9,19 @@ public class UrlUtils {
     }
 
     public static String getCoverPath(String pict_url) {
-        return "https:" + pict_url;
+        if (pict_url.startsWith("http") || pict_url.startsWith("https")) {
+            return pict_url;
+        } else {
+            return "https:" + pict_url;
+        }
     }
 
     public static String getCoverPath(String pict_url, int size) {
-        return "https:" + pict_url + "_" + size + "x" + size + ".jpg";
+        if (pict_url.startsWith("http") || pict_url.startsWith("https")) {
+            return pict_url;
+        } else {
+            return "https:" + pict_url + "_" + size + "x" + size + ".jpg";
+        }
     }
 
     public static String getTicketUrl(String url) {
@@ -22,5 +30,9 @@ public class UrlUtils {
         } else {
             return "https:" + url;
         }
+    }
+
+    public static String getRecommendPageContentUrl(int categoryId) {
+        return "recommend/" + categoryId;
     }
 }

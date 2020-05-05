@@ -10,9 +10,9 @@ import com.eshen.voucherunion.R;
 import com.eshen.voucherunion.base.BaseActivity;
 import com.eshen.voucherunion.base.BaseFragment;
 import com.eshen.voucherunion.ui.fragment.HomeFragment;
+import com.eshen.voucherunion.ui.fragment.RecommendFragment;
 import com.eshen.voucherunion.ui.fragment.RedPacketFragment;
 import com.eshen.voucherunion.ui.fragment.SearchFragment;
-import com.eshen.voucherunion.ui.fragment.SelectedFragment;
 import com.eshen.voucherunion.utils.LogUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,7 +24,7 @@ public class MainActivity extends BaseActivity {
     public BottomNavigationView navigationView;
     private HomeFragment homeFragment;
     private RedPacketFragment redPacketFragment;
-    private SelectedFragment selectedFragment;
+    private RecommendFragment selectedFragment;
     private SearchFragment searchFragment;
 
     @Override
@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
         homeFragment = new HomeFragment();
         redPacketFragment = new RedPacketFragment();
-        selectedFragment = new SelectedFragment();
+        selectedFragment = new RecommendFragment();
         searchFragment = new SearchFragment();
         switchFragment(homeFragment);
     }

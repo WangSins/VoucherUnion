@@ -38,7 +38,7 @@
             android:button="@null"
             android:drawableTop="@drawable/selector_select"
             android:gravity="center"
-            android:text="@string/text_selected"
+            android:text="@string/text_recommend"
             android:textColor="@drawable/selector_navigation_text" />
 
         <RadioButton
