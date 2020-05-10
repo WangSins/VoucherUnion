@@ -2,6 +2,7 @@ package com.eshen.voucherunion.model;
 
 import com.eshen.voucherunion.model.domain.Categories;
 import com.eshen.voucherunion.model.domain.HomePagerContent;
+import com.eshen.voucherunion.model.domain.OnSellContent;
 import com.eshen.voucherunion.model.domain.RecommendContent;
 import com.eshen.voucherunion.model.domain.RecommendPageCategory;
 import com.eshen.voucherunion.model.domain.TicketParams;
@@ -29,6 +30,9 @@ public interface Api {
     @GET("recommend/categories")
     Call<RecommendPageCategory> getRecommendPageCategories();
 
-    @GET()
+    @GET
     Call<RecommendContent> getRecommendPageContent(@Url String url);
+
+    @GET
+    Call<OnSellContent> getOnSellPageContent(@Url String url);
 }

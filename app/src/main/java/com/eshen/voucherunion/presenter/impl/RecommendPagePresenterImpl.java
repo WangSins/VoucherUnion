@@ -4,7 +4,6 @@ import com.eshen.voucherunion.model.Api;
 import com.eshen.voucherunion.model.domain.RecommendContent;
 import com.eshen.voucherunion.model.domain.RecommendPageCategory;
 import com.eshen.voucherunion.presenter.IRecommendPagePresenter;
-import com.eshen.voucherunion.utils.LogUtils;
 import com.eshen.voucherunion.utils.RetrofitManager;
 import com.eshen.voucherunion.utils.UrlUtils;
 import com.eshen.voucherunion.view.IRecommendPageCallback;
@@ -39,12 +38,11 @@ public class RecommendPagePresenterImpl implements IRecommendPagePresenter {
             @Override
             public void onResponse(Call<RecommendPageCategory> call, Response<RecommendPageCategory> response) {
                 int code = response.code();
-                LogUtils.d(RecommendPagePresenterImpl.this, "getRecommendPageCategories code-->" + code);
                 if (code == HttpURLConnection.HTTP_OK) {
-                    RecommendPageCategory selectedPageCategory = response.body();
+                    RecommendPageCategory recommendPageCategory = response.body();
                     //通知UI更新
                     if (callback != null) {
-                        callback.onCategoriesLoaded(selectedPageCategory);
+                        callback.onCategoriesLoaded(recommendPageCategory);
                     }
                 } else {
                     onLoadedError();
@@ -72,7 +70,6 @@ public class RecommendPagePresenterImpl implements IRecommendPagePresenter {
             @Override
             public void onResponse(Call<RecommendContent> call, Response<RecommendContent> response) {
                 int code = response.code();
-                LogUtils.d(RecommendPagePresenterImpl.this, "getRecommendPageContent code-->" + code);
                 if (code == HttpURLConnection.HTTP_OK) {
                     RecommendContent recommendContent = response.body();
                     if (callback != null) {

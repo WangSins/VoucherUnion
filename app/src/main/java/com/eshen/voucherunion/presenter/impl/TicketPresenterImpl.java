@@ -4,7 +4,6 @@ import com.eshen.voucherunion.model.Api;
 import com.eshen.voucherunion.model.domain.TicketParams;
 import com.eshen.voucherunion.model.domain.TicketResult;
 import com.eshen.voucherunion.presenter.ITicketPresenter;
-import com.eshen.voucherunion.utils.LogUtils;
 import com.eshen.voucherunion.utils.RetrofitManager;
 import com.eshen.voucherunion.utils.UrlUtils;
 import com.eshen.voucherunion.view.ITicketPagerCallback;
@@ -33,9 +32,6 @@ public class TicketPresenterImpl implements ITicketPresenter {
     @Override
     public void getTicket(String url, String title, String cover) {
         onLoadedTicketLoading();
-        LogUtils.d(TicketPresenterImpl.this, "ticket url -->" + url);
-        LogUtils.d(TicketPresenterImpl.this, "ticket title -->" + title);
-        LogUtils.d(TicketPresenterImpl.this, "ticket cover -->" + cover);
         this.cover = cover;
         String ticketUrl = UrlUtils.getTicketUrl(url);
         //去获取淘口令
@@ -50,7 +46,6 @@ public class TicketPresenterImpl implements ITicketPresenter {
                 if (code == HttpURLConnection.HTTP_OK) {
                     //请求成功
                     ticketResult = response.body();
-                    LogUtils.d(TicketPresenterImpl.this, ticketResult.toString());
                     //通知UI更新
                     onLoadedTicketSuccess();
                 } else {

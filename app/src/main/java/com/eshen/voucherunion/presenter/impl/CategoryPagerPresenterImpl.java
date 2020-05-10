@@ -3,7 +3,6 @@ package com.eshen.voucherunion.presenter.impl;
 import com.eshen.voucherunion.model.Api;
 import com.eshen.voucherunion.model.domain.HomePagerContent;
 import com.eshen.voucherunion.presenter.ICategoryPagerPresenter;
-import com.eshen.voucherunion.utils.LogUtils;
 import com.eshen.voucherunion.utils.RetrofitManager;
 import com.eshen.voucherunion.utils.UrlUtils;
 import com.eshen.voucherunion.view.ICategoryPagerCallback;
@@ -48,15 +47,12 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
             public void onResponse(Call<HomePagerContent> call, Response<HomePagerContent> response) {
                 //数据结果
                 int code = response.code();
-                LogUtils.d(CategoryPagerPresenterImpl.this, "code-->" + code);
                 if (code == HttpURLConnection.HTTP_OK) {
                     HomePagerContent pagerContent = response.body();
-                    LogUtils.d(CategoryPagerPresenterImpl.this, "page content -->" + pagerContent);
                     //把数据通知UI更新
                     handleHomePageContent(pagerContent, categoryId);
                 } else {
                     //请求失败
-                    LogUtils.d(CategoryPagerPresenterImpl.this, "请求失败...");
                     handleNetWorkError(categoryId);
                 }
             }
@@ -64,7 +60,6 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
             @Override
             public void onFailure(Call<HomePagerContent> call, Throwable t) {
                 //加载失败的结果
-                LogUtils.d(CategoryPagerPresenterImpl.this, "请求错误...");
                 handleNetWorkError(categoryId);
             }
         });
@@ -72,7 +67,6 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
 
     private Call<HomePagerContent> createTask(int categoryId, Integer targetPage) {
         String homePagerUrl = UrlUtils.CreateHomePagerUrl(categoryId, targetPage);
-        LogUtils.d(CategoryPagerPresenterImpl.this, "homePagerUrl-->" + homePagerUrl);
         Retrofit retrofit = RetrofitManager.getInstance().getRetrofit();
         Api api = retrofit.create(Api.class);
         return api.getHomePagerContent(homePagerUrl);
@@ -119,10 +113,8 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
             public void onResponse(Call<HomePagerContent> call, Response<HomePagerContent> response) {
                 //结果
                 int code = response.code();
-                LogUtils.d(CategoryPagerPresenterImpl.this, "code-->" + code);
                 if (code == HttpURLConnection.HTTP_OK) {
                     HomePagerContent result = response.body();
-                    LogUtils.d(CategoryPagerPresenterImpl.this, "result-->" + result.toString());
                     handleLoaderMoreResult(result, categoryId);
 
                 } else {
@@ -132,8 +124,6 @@ public class CategoryPagerPresenterImpl implements ICategoryPagerPresenter {
 
             @Override
             public void onFailure(Call<HomePagerContent> call, Throwable t) {
-                //失败
-                LogUtils.d(CategoryPagerPresenterImpl.this, t.toString());
                 handleLoaderMoreError(categoryId);
             }
         });

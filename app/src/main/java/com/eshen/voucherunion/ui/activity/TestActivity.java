@@ -4,7 +4,6 @@ import android.widget.RadioGroup;
 
 import com.eshen.voucherunion.R;
 import com.eshen.voucherunion.base.BaseActivity;
-import com.eshen.voucherunion.utils.LogUtils;
 
 import butterknife.BindView;
 
@@ -26,7 +25,6 @@ public class TestActivity extends BaseActivity {
         navigation.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                LogUtils.d(TestActivity.class, "checkedId-->" + checkedId);
                 switch (checkedId) {
                     case R.id.test_home:
                         break;

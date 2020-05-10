@@ -25,7 +25,6 @@ import com.eshen.voucherunion.R;
 import com.eshen.voucherunion.base.BaseActivity;
 import com.eshen.voucherunion.model.domain.TicketResult;
 import com.eshen.voucherunion.presenter.ITicketPresenter;
-import com.eshen.voucherunion.utils.LogUtils;
 import com.eshen.voucherunion.utils.PresenterManager;
 import com.eshen.voucherunion.utils.ToastUtils;
 import com.eshen.voucherunion.utils.UrlUtils;
@@ -80,7 +79,6 @@ public class TicketActivity extends BaseActivity implements ITicketPagerCallback
             e.printStackTrace();
             hasTaobaoApp = false;
         }
-        LogUtils.d(TicketActivity.this, "hasTaobaoApp-->" + hasTaobaoApp);
         //根据这个值去修改UI
         copyOrOpenTv.setText(hasTaobaoApp ? "打开淘宝领券" : "复制淘口令");
     }
@@ -99,26 +97,26 @@ public class TicketActivity extends BaseActivity implements ITicketPagerCallback
                 //复制淘口令
                 //拿到内容
                 String ticketCode = codeEt.getText().toString().trim();
-                if (!TextUtils.isEmpty(ticketCode)) {
-                    ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    //复制到粘贴板
-                    ClipData clipData = ClipData.newPlainText("taobao_ticket_code", ticketCode);
-                    clipboardManager.setPrimaryClip(clipData);
-                    //判断有没有淘宝
-                    if (hasTaobaoApp) {
-                        //如果有就打开淘宝
-                        Intent intent = new Intent();
-                        //intent.setAction("android.intent.action.MAIN");
-                        //intent.addCategory("android.intent.category.LAUNCHER");
-                        ComponentName componentName = new ComponentName("com.taobao.taobao", "com.taobao.tao.TBMainActivity");
-                        intent.setComponent(componentName);
-                        startActivity(intent);
-                    } else {
-                        //没有就提示复制成功
-                        ToastUtils.showToast("已经复制，粘贴分享或打开淘宝");
-                    }
-                } else {
+                if (TextUtils.isEmpty(ticketCode)) {
                     ToastUtils.showToast("没获取到淘口令");
+                    return;
+                }
+                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                //复制到粘贴板
+                ClipData clipData = ClipData.newPlainText("taobao_ticket_code", ticketCode);
+                clipboardManager.setPrimaryClip(clipData);
+                //判断有没有淘宝
+                if (hasTaobaoApp) {
+                    //如果有就打开淘宝
+                    Intent intent = new Intent();
+                    //intent.setAction("android.intent.action.MAIN");
+                    //intent.addCategory("android.intent.category.LAUNCHER");
+                    ComponentName componentName = new ComponentName("com.taobao.taobao", "com.taobao.tao.TBMainActivity");
+                    intent.setComponent(componentName);
+                    startActivity(intent);
+                } else {
+                    //没有就提示复制成功
+                    ToastUtils.showToast("已经复制，粘贴分享或打开淘宝");
                 }
             }
         });

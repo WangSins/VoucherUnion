@@ -11,7 +11,7 @@
     <item
         android:id="@+id/red_packet"
         android:icon="@mipmap/red_packet_normal"
-        android:title="@string/text_red_packet" />
+        android:title="@string/text_on_sell" />
     <item
         android:id="@+id/search"
         android:icon="@mipmap/search_normal"

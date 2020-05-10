@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.eshen.voucherunion.R;
-import com.eshen.voucherunion.utils.LogUtils;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -37,7 +36,6 @@ public abstract class BaseFragment extends Fragment {
 
     @OnClick(R.id.network_error_tips)
     public void retry() {
-        LogUtils.d(BaseFragment.this, "重试被点击");
         onRetryClick();
     }
 

@@ -10,10 +10,9 @@ import com.eshen.voucherunion.R;
 import com.eshen.voucherunion.base.BaseActivity;
 import com.eshen.voucherunion.base.BaseFragment;
 import com.eshen.voucherunion.ui.fragment.HomeFragment;
+import com.eshen.voucherunion.ui.fragment.OnSellFragment;
 import com.eshen.voucherunion.ui.fragment.RecommendFragment;
-import com.eshen.voucherunion.ui.fragment.RedPacketFragment;
 import com.eshen.voucherunion.ui.fragment.SearchFragment;
-import com.eshen.voucherunion.utils.LogUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
@@ -23,8 +22,8 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.main_navigation_bar)
     public BottomNavigationView navigationView;
     private HomeFragment homeFragment;
-    private RedPacketFragment redPacketFragment;
-    private RecommendFragment selectedFragment;
+    private OnSellFragment onSellFragment;
+    private RecommendFragment recommendFragment;
     private SearchFragment searchFragment;
 
     @Override
@@ -35,8 +34,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         homeFragment = new HomeFragment();
-        redPacketFragment = new RedPacketFragment();
-        selectedFragment = new RecommendFragment();
+        onSellFragment = new OnSellFragment();
+        recommendFragment = new RecommendFragment();
         searchFragment = new SearchFragment();
         switchFragment(homeFragment);
     }
@@ -46,16 +45,15 @@ public class MainActivity extends BaseActivity {
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                LogUtils.d(MainActivity.this, "title-->" + item.getTitle() + ",id-->" + item.getItemId());
                 switch (item.getItemId()) {
                     case R.id.home:
                         switchFragment(homeFragment);
                         break;
                     case R.id.selected:
-                        switchFragment(selectedFragment);
+                        switchFragment(recommendFragment);
                         break;
                     case R.id.red_packet:
-                        switchFragment(redPacketFragment);
+                        switchFragment(onSellFragment);
                         break;
                     case R.id.search:
                         switchFragment(searchFragment);

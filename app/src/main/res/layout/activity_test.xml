@@ -49,7 +49,7 @@
             android:button="@null"
             android:drawableTop="@drawable/selector_red_packet"
             android:gravity="center"
-            android:text="@string/text_red_packet"
+            android:text="@string/text_on_sell"
             android:textColor="@drawable/selector_navigation_text" />
 
         <RadioButton

@@ -3,7 +3,6 @@ package com.eshen.voucherunion.presenter.impl;
 import com.eshen.voucherunion.model.Api;
 import com.eshen.voucherunion.model.domain.Categories;
 import com.eshen.voucherunion.presenter.IHomePresenter;
-import com.eshen.voucherunion.utils.LogUtils;
 import com.eshen.voucherunion.utils.RetrofitManager;
 import com.eshen.voucherunion.view.IHomeCallback;
 
@@ -38,7 +37,6 @@ public class HomePresenterImpl implements IHomePresenter {
             public void onResponse(Call<Categories> call, Response<Categories> response) {
                 //数据结果
                 int code = response.code();
-                LogUtils.d(HomePresenterImpl.this, "code-->" + code);
                 if (code == HttpURLConnection.HTTP_OK) {
                     //请求成功
                     Categories categories = response.body();
@@ -46,13 +44,11 @@ public class HomePresenterImpl implements IHomePresenter {
                         if (categories == null || categories.getData().size() == 0) {
                             callback.onEmpty();
                         } else {
-                            LogUtils.d(HomePresenterImpl.this, categories.toString());
                             callback.onCategoriesLoaded(categories);
                         }
                     }
                 } else {
                     //请求失败
-                    LogUtils.d(HomePresenterImpl.this, "请求失败...");
                     if (callback != null) {
                         callback.onError();
                     }
@@ -62,7 +58,6 @@ public class HomePresenterImpl implements IHomePresenter {
             @Override
             public void onFailure(Call<Categories> call, Throwable t) {
                 //加载失败的结果
-                LogUtils.d(HomePresenterImpl.this, "请求错误...");
                 if (callback != null) {
                     callback.onError();
                 }

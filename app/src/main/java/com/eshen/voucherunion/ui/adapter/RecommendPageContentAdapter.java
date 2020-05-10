@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.eshen.voucherunion.R;
+import com.eshen.voucherunion.model.domain.IBaseInfo;
 import com.eshen.voucherunion.model.domain.RecommendContent;
 import com.eshen.voucherunion.utils.Constant;
 
@@ -109,7 +110,7 @@ public class RecommendPageContentAdapter extends RecyclerView.Adapter<RecommendP
     }
 
     public interface OnSelectedPageContentItemClickListener {
-        void onContentItemClick(RecommendContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean item);
+        void onContentItemClick(IBaseInfo item);
     }
 
     public void setOnSelectedPageContentItemClickListener(OnSelectedPageContentItemClickListener listener) {

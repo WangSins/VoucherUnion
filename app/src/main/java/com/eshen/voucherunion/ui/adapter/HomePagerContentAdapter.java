@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.eshen.voucherunion.R;
 import com.eshen.voucherunion.model.domain.HomePagerContent;
+import com.eshen.voucherunion.model.domain.IBaseInfo;
 import com.eshen.voucherunion.utils.UrlUtils;
 
 import java.util.ArrayList;
@@ -115,6 +116,6 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
     }
 
     public interface OnListItemClickListener {
-        void onItemClick(HomePagerContent.DataBean item);
+        void onItemClick(IBaseInfo item);
     }
 }

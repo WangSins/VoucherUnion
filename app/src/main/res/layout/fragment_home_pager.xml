@@ -32,7 +32,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="140dp">
+                        android:layout_height="160dp">
 
                         <com.eshen.voucherunion.ui.custom.AutoLoopViewPager
                             android:id="@+id/looper_pager"
@@ -45,7 +45,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_marginBottom="5dp"
+                            android:layout_marginBottom="8dp"
                             android:gravity="center"
                             android:orientation="horizontal" />
 
