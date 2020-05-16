@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
-import com.eshen.voucherunion.model.domain.HomePagerContent;
+import com.eshen.voucherunion.model.domain.HomePageContent;
 import com.eshen.voucherunion.model.domain.IBaseInfo;
 import com.eshen.voucherunion.utils.UrlUtils;
 
@@ -19,9 +19,9 @@ import java.util.List;
 /**
  * Created by Sin on 2020/5/3
  */
-public class LooperPagerAdapter extends PagerAdapter {
+public class LooperPageAdapter extends PagerAdapter {
 
-    private List<HomePagerContent.DataBean> data = new ArrayList<>();
+    private List<HomePageContent.DataBean> data = new ArrayList<>();
     private OnLooperPagerItemClickListener itemClickListener;
 
     public int getDataSize() {
@@ -33,7 +33,7 @@ public class LooperPagerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         //处理越界问题
         int realPosition = position % data.size();
-        HomePagerContent.DataBean dataBean = data.get(realPosition);
+        HomePageContent.DataBean dataBean = data.get(realPosition);
         int measuredHeight = container.getMeasuredHeight();
         int measuredWidth = container.getMeasuredWidth();
         int ivSize = (measuredWidth > measuredHeight ? measuredWidth : measuredHeight) / 2;
@@ -72,7 +72,7 @@ public class LooperPagerAdapter extends PagerAdapter {
         return view == object;
     }
 
-    public void setData(List<HomePagerContent.DataBean> contents) {
+    public void setData(List<HomePageContent.DataBean> contents) {
         data.clear();
         data.addAll(contents);
         notifyDataSetChanged();

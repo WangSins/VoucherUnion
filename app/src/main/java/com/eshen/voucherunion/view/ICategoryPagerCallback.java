@@ -1,7 +1,7 @@
 package com.eshen.voucherunion.view;
 
 import com.eshen.voucherunion.base.IBaseCallback;
-import com.eshen.voucherunion.model.domain.HomePagerContent;
+import com.eshen.voucherunion.model.domain.HomePageContent;
 
 import java.util.List;
 
@@ -17,14 +17,14 @@ public interface ICategoryPagerCallback extends IBaseCallback {
      *
      * @param contents
      */
-    void onContentLoaded(List<HomePagerContent.DataBean> contents);
+    void onContentLoaded(List<HomePageContent.DataBean> contents);
 
     /**
      * 加载到更多内容
      *
      * @param contents
      */
-    void onLoaderMoreLoaded(List<HomePagerContent.DataBean> contents);
+    void onLoaderMoreLoaded(List<HomePageContent.DataBean> contents);
 
     /**
      * 加载更多网络错误
@@ -41,5 +41,5 @@ public interface ICategoryPagerCallback extends IBaseCallback {
      *
      * @param contents
      */
-    void onLooperListLoaded(List<HomePagerContent.DataBean> contents);
+    void onLooperListLoaded(List<HomePageContent.DataBean> contents);
 }

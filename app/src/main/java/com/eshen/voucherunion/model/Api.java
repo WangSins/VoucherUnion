@@ -1,10 +1,12 @@
 package com.eshen.voucherunion.model;
 
 import com.eshen.voucherunion.model.domain.Categories;
-import com.eshen.voucherunion.model.domain.HomePagerContent;
+import com.eshen.voucherunion.model.domain.HomePageContent;
 import com.eshen.voucherunion.model.domain.OnSellContent;
 import com.eshen.voucherunion.model.domain.RecommendContent;
 import com.eshen.voucherunion.model.domain.RecommendPageCategory;
+import com.eshen.voucherunion.model.domain.SearchRecommend;
+import com.eshen.voucherunion.model.domain.SearchResult;
 import com.eshen.voucherunion.model.domain.TicketParams;
 import com.eshen.voucherunion.model.domain.TicketResult;
 
@@ -12,6 +14,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import retrofit2.http.Url;
 
 /**
@@ -22,7 +25,7 @@ public interface Api {
     Call<Categories> getCategories();
 
     @GET
-    Call<HomePagerContent> getHomePagerContent(@Url String url);
+    Call<HomePageContent> getHomePagerContent(@Url String url);
 
     @POST("tpwd")
     Call<TicketResult> getTicket(@Body TicketParams ticketParams);
@@ -35,4 +38,10 @@ public interface Api {
 
     @GET
     Call<OnSellContent> getOnSellPageContent(@Url String url);
+
+    @GET("search/recommend")
+    Call<SearchRecommend> getRecommendWords();
+
+    @GET("search")
+    Call<SearchResult> doSearch(@Query("page") int page, @Query("keyword") String keyword);
 }

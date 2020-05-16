@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.eshen.voucherunion.model.domain.IBaseInfo;
-import com.eshen.voucherunion.presenter.ITicketPresenter;
+import com.eshen.voucherunion.presenter.ITicketPagePresenter;
 import com.eshen.voucherunion.ui.activity.TicketActivity;
 
 /**
@@ -16,8 +16,8 @@ public class TicketUtil {
         String title = baseInfo.getTitle();
         String cover = baseInfo.getCover();
         //拿到TickerPresenter去加载数据
-        ITicketPresenter ticketPresenter = PresenterManager.getInstance().getTicketPresenter();
-        ticketPresenter.getTicket(url, title, cover);
+        ITicketPagePresenter ticketPagePresenter = PresenterManager.getInstance().getTicketPagePresenter();
+        ticketPagePresenter.getTicket(url, title, cover);
         context.startActivity(new Intent(context, TicketActivity.class));
     }
 }

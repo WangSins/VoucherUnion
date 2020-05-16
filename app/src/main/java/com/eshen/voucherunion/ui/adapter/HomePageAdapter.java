@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.eshen.voucherunion.model.domain.Categories;
-import com.eshen.voucherunion.ui.fragment.HomePagerFragment;
+import com.eshen.voucherunion.ui.fragment.HomePageFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +15,12 @@ import java.util.List;
 /**
  * Created by Sin on 2020/5/2
  */
-public class HomePagerAdapter extends FragmentPagerAdapter {
+public class HomePageAdapter extends FragmentPagerAdapter {
 
 
     private List<Categories.DataBean> categories = new ArrayList<>();
 
-    public HomePagerAdapter(@NonNull FragmentManager fm) {
+    public HomePageAdapter(@NonNull FragmentManager fm) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
@@ -33,7 +33,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        HomePagerFragment homePagerFragment = HomePagerFragment.newInstance(categories.get(position));
+        HomePageFragment homePagerFragment = HomePageFragment.newInstance(categories.get(position));
         return homePagerFragment;
     }
 

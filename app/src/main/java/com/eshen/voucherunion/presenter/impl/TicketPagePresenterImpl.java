@@ -3,10 +3,10 @@ package com.eshen.voucherunion.presenter.impl;
 import com.eshen.voucherunion.model.Api;
 import com.eshen.voucherunion.model.domain.TicketParams;
 import com.eshen.voucherunion.model.domain.TicketResult;
-import com.eshen.voucherunion.presenter.ITicketPresenter;
+import com.eshen.voucherunion.presenter.ITicketPagePresenter;
 import com.eshen.voucherunion.utils.RetrofitManager;
 import com.eshen.voucherunion.utils.UrlUtils;
-import com.eshen.voucherunion.view.ITicketPagerCallback;
+import com.eshen.voucherunion.view.ITicketPageCallback;
 
 import java.net.HttpURLConnection;
 
@@ -18,8 +18,8 @@ import retrofit2.Retrofit;
 /**
  * Created by Sin on 2020/5/4
  */
-public class TicketPresenterImpl implements ITicketPresenter {
-    private ITicketPagerCallback callback = null;
+public class TicketPagePresenterImpl implements ITicketPagePresenter {
+    private ITicketPageCallback callback = null;
     private String cover;
     private TicketResult ticketResult;
 
@@ -89,7 +89,7 @@ public class TicketPresenterImpl implements ITicketPresenter {
 
 
     @Override
-    public void registerViewCallback(ITicketPagerCallback callback) {
+    public void registerViewCallback(ITicketPageCallback callback) {
         this.callback = callback;
         if (currentState != LoadState.NONE) {
             //状态已经改变
@@ -105,7 +105,7 @@ public class TicketPresenterImpl implements ITicketPresenter {
     }
 
     @Override
-    public void unregisterViewCallback(ITicketPagerCallback callback) {
+    public void unregisterViewCallback(ITicketPageCallback callback) {
         this.callback = null;
     }
 }

@@ -17,7 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements IMainActivity {
 
     @BindView(R.id.main_navigation_bar)
     public BottomNavigationView navigationView;
@@ -70,6 +70,10 @@ public class MainActivity extends BaseActivity {
     private BaseFragment lastOneFragment = null;
 
     private void switchFragment(BaseFragment targetFragment) {
+        //如果上一个Fragment和要切换的是同一个
+        if (lastOneFragment == targetFragment) {
+            return;
+        }
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         if (!targetFragment.isAdded()) {
@@ -82,5 +86,11 @@ public class MainActivity extends BaseActivity {
         }
         lastOneFragment = targetFragment;
         transaction.commit();
+    }
+
+    @Override
+    public void switch2Search() {
+        //切换导航栏选中
+        navigationView.setSelectedItemId(R.id.search);
     }
 }

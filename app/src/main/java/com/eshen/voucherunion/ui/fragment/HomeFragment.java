@@ -3,14 +3,17 @@ package com.eshen.voucherunion.ui.fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.eshen.voucherunion.R;
 import com.eshen.voucherunion.base.BaseFragment;
 import com.eshen.voucherunion.model.domain.Categories;
 import com.eshen.voucherunion.presenter.IHomePresenter;
-import com.eshen.voucherunion.ui.adapter.HomePagerAdapter;
+import com.eshen.voucherunion.ui.activity.IMainActivity;
+import com.eshen.voucherunion.ui.adapter.HomePageAdapter;
 import com.eshen.voucherunion.utils.PresenterManager;
 import com.eshen.voucherunion.view.IHomeCallback;
 import com.google.android.material.tabs.TabLayout;
@@ -28,7 +31,10 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
     public TabLayout tabLayout;
     @BindView(R.id.home_pager)
     public ViewPager viewPager;
-    private HomePagerAdapter homePagerAdapter;
+    private HomePageAdapter homePageAdapter;
+
+    @BindView(R.id.home_search_input_box)
+    public EditText searchInputBox;
 
     @Override
     protected int getRootViewResId() {
@@ -44,9 +50,9 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
     protected void initView(View rootView) {
         tabLayout.setupWithViewPager(viewPager);
         //给ViewPager设置适配器
-        homePagerAdapter = new HomePagerAdapter(getChildFragmentManager());
+        homePageAdapter = new HomePageAdapter(getChildFragmentManager());
         //设置适配器
-        viewPager.setAdapter(homePagerAdapter);
+        viewPager.setAdapter(homePageAdapter);
     }
 
     @Override
@@ -54,6 +60,19 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
         //创建presenter
         homePresenter = PresenterManager.getInstance().getHomePresenter();
         homePresenter.registerViewCallback(this);
+    }
+
+    @Override
+    protected void initListener() {
+        searchInputBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentActivity activity = getActivity();
+                if (activity instanceof IMainActivity) {
+                    ((IMainActivity) activity).switch2Search();
+                }
+            }
+        });
     }
 
     @Override
@@ -67,8 +86,8 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
     public void onCategoriesLoaded(Categories categories) {
         setUpState(State.SUCCESS);
         //加载的数据
-        if (homePagerAdapter != null) {
-            homePagerAdapter.setCategories(categories);
+        if (homePageAdapter != null) {
+            homePageAdapter.setCategories(categories);
         }
 
     }

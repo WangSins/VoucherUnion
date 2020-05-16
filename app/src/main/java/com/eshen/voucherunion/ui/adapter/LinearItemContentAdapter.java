@@ -2,6 +2,7 @@ package com.eshen.voucherunion.ui.adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.eshen.voucherunion.R;
-import com.eshen.voucherunion.model.domain.HomePagerContent;
 import com.eshen.voucherunion.model.domain.IBaseInfo;
+import com.eshen.voucherunion.model.domain.ILinearItemInfo;
 import com.eshen.voucherunion.utils.UrlUtils;
 
 import java.util.ArrayList;
@@ -26,21 +27,21 @@ import butterknife.ButterKnife;
 /**
  * Created by Sin on 2020/5/3
  */
-public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerContentAdapter.InnerHolder> {
+public class LinearItemContentAdapter extends RecyclerView.Adapter<LinearItemContentAdapter.InnerHolder> {
 
-    List<HomePagerContent.DataBean> data = new ArrayList<>();
+    List<ILinearItemInfo> data = new ArrayList<>();
     private OnListItemClickListener itemClickListener;
 
     @NonNull
     @Override
     public InnerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_pager_content, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_linear_goods_content, parent, false);
         return new InnerHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
-        HomePagerContent.DataBean dataBean = data.get(position);
+        ILinearItemInfo dataBean = data.get(position);
         holder.setData(dataBean);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,13 +58,13 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
         return data.size();
     }
 
-    public void setData(List<HomePagerContent.DataBean> contents) {
+    public void setData(List<? extends ILinearItemInfo> contents) {
         data.clear();
         data.addAll(contents);
         notifyDataSetChanged();
     }
 
-    public void addData(List<HomePagerContent.DataBean> contents) {
+    public void addData(List<? extends ILinearItemInfo> contents) {
         //添加之前拿到原来的size
         int olderSize = data.size();
         data.addAll(contents);
@@ -90,18 +91,24 @@ public class HomePagerContentAdapter extends RecyclerView.Adapter<HomePagerConte
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(HomePagerContent.DataBean dataBean) {
+        public void setData(ILinearItemInfo dataBean) {
             Context context = itemView.getContext();
-            String finalPrice = dataBean.getZk_final_price();
-            long couponAmount = dataBean.getCoupon_amount();
+            String finalPrice = dataBean.getFinalPrise();
+            long couponAmount = dataBean.getCouponAmount();
             float resultPrise = Float.parseFloat(finalPrice) - couponAmount;
 
             ViewGroup.LayoutParams layoutParams = coverIv.getLayoutParams();
             int width = layoutParams.width;
             int height = layoutParams.height;
             int coverSize = (width > height ? width : height) / 2;
-            String coverPath = UrlUtils.getCoverPath(dataBean.getPict_url(), coverSize);
-            Glide.with(context).load(coverPath).into(coverIv);
+            String cover = dataBean.getCover();
+            if (!TextUtils.isEmpty(cover)) {
+                String coverPath = UrlUtils.getCoverPath(dataBean.getCover(),coverSize);
+                Glide.with(context).load(coverPath).into(coverIv);
+            }else {
+                coverIv.setImageResource(R.mipmap.ic_launcher);
+            }
+
             titleTv.setText(dataBean.getTitle());
             offPriseTv.setText(String.format(context.getString(R.string.text_goods_off_prise), couponAmount));
             finalPriseTv.setText(String.format(context.getString(R.string.text_goods_after_off_prise), resultPrise));

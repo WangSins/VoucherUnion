@@ -18,4 +18,7 @@
     <string name="text_tao_kou_lin">淘口令</string>
     <string name="text_recommend_original_prise">原价：%1$s元</string>
     <string name="text_recommend_buy">领券购买</string>
+    <string name="text_search_cancel">取消</string>
+    <string name="text_search_history">搜索历史</string>
+    <string name="text_search_recommend">热门搜索</string>
 </resources>

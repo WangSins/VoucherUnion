@@ -15,11 +15,11 @@ import androidx.viewpager.widget.ViewPager;
 import com.eshen.voucherunion.R;
 import com.eshen.voucherunion.base.BaseFragment;
 import com.eshen.voucherunion.model.domain.Categories;
-import com.eshen.voucherunion.model.domain.HomePagerContent;
+import com.eshen.voucherunion.model.domain.HomePageContent;
 import com.eshen.voucherunion.model.domain.IBaseInfo;
-import com.eshen.voucherunion.presenter.ICategoryPagerPresenter;
-import com.eshen.voucherunion.ui.adapter.HomePagerContentAdapter;
-import com.eshen.voucherunion.ui.adapter.LooperPagerAdapter;
+import com.eshen.voucherunion.presenter.ICategoryPagePresenter;
+import com.eshen.voucherunion.ui.adapter.LinearItemContentAdapter;
+import com.eshen.voucherunion.ui.adapter.LooperPageAdapter;
 import com.eshen.voucherunion.ui.custom.AutoLoopViewPager;
 import com.eshen.voucherunion.utils.Constant;
 import com.eshen.voucherunion.utils.PresenterManager;
@@ -38,9 +38,9 @@ import butterknife.BindView;
 /**
  * Created by Sin on 2020/5/2
  */
-public class HomePagerFragment extends BaseFragment implements ICategoryPagerCallback {
+public class HomePageFragment extends BaseFragment implements ICategoryPagerCallback {
 
-    private ICategoryPagerPresenter categoryPagerPresenter;
+    private ICategoryPagePresenter categoryPagerPresenter;
     private int materialId;
 
     @BindView(R.id.home_pager_parent)
@@ -49,12 +49,12 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     @BindView(R.id.home_pager_content_list)
     public RecyclerView contentList;
 
-    private HomePagerContentAdapter contentAdapter;
+    private LinearItemContentAdapter contentAdapter;
 
     @BindView(R.id.looper_pager)
     public AutoLoopViewPager looperPager;
 
-    private LooperPagerAdapter looperPagerAdapter;
+    private LooperPageAdapter looperPageAdapter;
 
     @BindView(R.id.home_pager_title)
     public TextView currentCategoryTitleTv;
@@ -71,14 +71,14 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     @BindView(R.id.home_pager_header_container)
     public LinearLayout homeHeaderContainer;
 
-    public static HomePagerFragment newInstance(Categories.DataBean categories) {
+    public static HomePageFragment newInstance(Categories.DataBean categories) {
 
-        HomePagerFragment homePagerFragment = new HomePagerFragment();
+        HomePageFragment homePageFragment = new HomePageFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(Constant.KEY_HOME_PAGER_MATERIAL_ID, categories.getId());
         bundle.putString(Constant.KEY_HOME_PAGER_TITLE, categories.getTitle());
-        homePagerFragment.setArguments(bundle);
-        return homePagerFragment;
+        homePageFragment.setArguments(bundle);
+        return homePageFragment;
     }
 
     @Override
@@ -111,14 +111,14 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
             }
         });
         //创建适配器
-        contentAdapter = new HomePagerContentAdapter();
+        contentAdapter = new LinearItemContentAdapter();
         //设置适配器
         contentList.setAdapter(contentAdapter);
 
         //创建轮播图适配器
-        looperPagerAdapter = new LooperPagerAdapter();
+        looperPageAdapter = new LooperPageAdapter();
         //设置轮播图适配器
-        looperPager.setAdapter(looperPagerAdapter);
+        looperPager.setAdapter(looperPageAdapter);
 
         //设置相关内容
         twinklingRefreshLayout.setEnableRefresh(false);
@@ -130,14 +130,14 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     @Override
     protected void initListener() {
 
-        contentAdapter.setOnListItemClickListener(new HomePagerContentAdapter.OnListItemClickListener() {
+        contentAdapter.setOnListItemClickListener(new LinearItemContentAdapter.OnListItemClickListener() {
             @Override
             public void onItemClick(IBaseInfo item) {
                 handleItemClick(item);
             }
         });
 
-        looperPagerAdapter.setOnLooperPagerItemClickListener(new LooperPagerAdapter.OnLooperPagerItemClickListener() {
+        looperPageAdapter.setOnLooperPagerItemClickListener(new LooperPageAdapter.OnLooperPagerItemClickListener() {
             @Override
             public void onLooperItemClick(IBaseInfo item) {
                 handleItemClick(item);
@@ -183,10 +183,10 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
             @Override
             public void onPageSelected(int position) {
-                if (looperPagerAdapter.getDataSize() == 0) {
+                if (looperPageAdapter.getDataSize() == 0) {
                     return;
                 }
-                int targetPosition = position % looperPagerAdapter.getDataSize();
+                int targetPosition = position % looperPageAdapter.getDataSize();
                 //切换指示器
                 upDateLooperIndicator(targetPosition);
             }
@@ -229,7 +229,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
 
     @Override
     protected void initPresenter() {
-        categoryPagerPresenter = PresenterManager.getInstance().getCategoryPagerPresenter();
+        categoryPagerPresenter = PresenterManager.getInstance().getCategoryPagePresenter();
         categoryPagerPresenter.registerViewCallback(this);
     }
 
@@ -255,7 +255,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     }
 
     @Override
-    public void onContentLoaded(List<HomePagerContent.DataBean> contents) {
+    public void onContentLoaded(List<HomePageContent.DataBean> contents) {
         //数据列表加载到了
         contentAdapter.setData(contents);
         setUpState(State.SUCCESS);
@@ -278,7 +278,7 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     }
 
     @Override
-    public void onLoaderMoreLoaded(List<HomePagerContent.DataBean> contents) {
+    public void onLoaderMoreLoaded(List<HomePageContent.DataBean> contents) {
         //添加到适配器数据的底部
         contentAdapter.addData(contents);
         if (twinklingRefreshLayout != null) {
@@ -304,8 +304,8 @@ public class HomePagerFragment extends BaseFragment implements ICategoryPagerCal
     }
 
     @Override
-    public void onLooperListLoaded(List<HomePagerContent.DataBean> contents) {
-        looperPagerAdapter.setData(contents);
+    public void onLooperListLoaded(List<HomePageContent.DataBean> contents) {
+        looperPageAdapter.setData(contents);
         //中间点%数据的Size不一定为0，所以显示不是第一个
         int dx = (Integer.MAX_VALUE / 2) % contents.size();
         int targetCenterPosition = (Integer.MAX_VALUE / 2) - dx;

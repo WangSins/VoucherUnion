@@ -24,20 +24,20 @@ import com.bumptech.glide.request.transition.Transition;
 import com.eshen.voucherunion.R;
 import com.eshen.voucherunion.base.BaseActivity;
 import com.eshen.voucherunion.model.domain.TicketResult;
-import com.eshen.voucherunion.presenter.ITicketPresenter;
+import com.eshen.voucherunion.presenter.ITicketPagePresenter;
 import com.eshen.voucherunion.utils.PresenterManager;
 import com.eshen.voucherunion.utils.ToastUtils;
 import com.eshen.voucherunion.utils.UrlUtils;
-import com.eshen.voucherunion.view.ITicketPagerCallback;
+import com.eshen.voucherunion.view.ITicketPageCallback;
 
 import butterknife.BindView;
 
 /**
  * Created by Sin on 2020/5/4
  */
-public class TicketActivity extends BaseActivity implements ITicketPagerCallback {
+public class TicketActivity extends BaseActivity implements ITicketPageCallback {
 
-    private ITicketPresenter ticketPresenter;
+    private ITicketPagePresenter ticketPresenter;
 
     private boolean hasTaobaoApp = false;
 
@@ -66,7 +66,7 @@ public class TicketActivity extends BaseActivity implements ITicketPagerCallback
 
     @Override
     protected void initPresenter() {
-        ticketPresenter = PresenterManager.getInstance().getTicketPresenter();
+        ticketPresenter = PresenterManager.getInstance().getTicketPagePresenter();
         ticketPresenter.registerViewCallback(this);
         //判断是否安装淘宝
         //com.taobao.taobao
