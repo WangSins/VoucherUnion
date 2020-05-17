@@ -131,29 +131,30 @@ public class TicketActivity extends BaseActivity implements ITicketPageCallback 
 
     @Override
     public void onTicketLoaded(String cover, TicketResult result) {
-        if (coverIv != null && !TextUtils.isEmpty(cover)) {
-            ViewGroup.LayoutParams layoutParams = coverIv.getLayoutParams();
-            int width = layoutParams.width;
-            int height = layoutParams.height;
-            int coverSize = (width > height ? width : height) / 2;
-            String coverPath = UrlUtils.getCoverPath(cover);
-            Glide.with(this).load(coverPath).into(new CustomTarget<Drawable>() {
-                @Override
-                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                    if (coverLoadingIv != null) {
-                        coverLoadingIv.setVisibility(View.GONE);
+        if (coverIv != null) {
+            if (!TextUtils.isEmpty(cover)) {
+                ViewGroup.LayoutParams layoutParams = coverIv.getLayoutParams();
+                int width = layoutParams.width;
+                int height = layoutParams.height;
+                int coverSize = (width > height ? width : height) / 2;
+                String coverPath = UrlUtils.getCoverPath(cover);
+                Glide.with(this).load(coverPath).into(new CustomTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        imageLoadingOrRetryVisibility(false, false);
+                        coverIv.setImageDrawable(resource);
                     }
-                    if (coverRetryTv != null) {
-                        coverRetryTv.setVisibility(View.GONE);
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+
                     }
-                    coverIv.setImageDrawable(resource);
-                }
-
-                @Override
-                public void onLoadCleared(@Nullable Drawable placeholder) {
-
-                }
-            });
+                });
+            } else {
+                imageLoadingOrRetryVisibility(false, false);
+                coverIv.setBackground(null);
+                coverIv.setImageResource(R.mipmap.ic_launcher);
+            }
         }
         if (codeEt != null && result.getData().getTbk_tpwd_create_response() != null) {
             codeEt.setText(result.getData().getTbk_tpwd_create_response().getData().getModel());
@@ -162,25 +163,24 @@ public class TicketActivity extends BaseActivity implements ITicketPageCallback 
 
     @Override
     public void onError() {
-        if (coverLoadingIv != null) {
-            coverLoadingIv.setVisibility(View.GONE);
-        }
-        if (coverRetryTv != null) {
-            coverRetryTv.setVisibility(View.VISIBLE);
-        }
+        imageLoadingOrRetryVisibility(false, true);
     }
 
     @Override
     public void onLoading() {
-        if (coverLoadingIv != null) {
-            coverLoadingIv.setVisibility(View.VISIBLE);
-        }
-        if (coverRetryTv != null) {
-            coverRetryTv.setVisibility(View.GONE);
-        }
+        imageLoadingOrRetryVisibility(true, false);
     }
 
     @Override
     public void onEmpty() {
+    }
+
+    private void imageLoadingOrRetryVisibility(boolean loadingVisibility, boolean retryVisibility) {
+        if (coverLoadingIv != null) {
+            coverLoadingIv.setVisibility(loadingVisibility ? View.VISIBLE : View.GONE);
+        }
+        if (coverRetryTv != null) {
+            coverRetryTv.setVisibility(retryVisibility ? View.VISIBLE : View.GONE);
+        }
     }
 }

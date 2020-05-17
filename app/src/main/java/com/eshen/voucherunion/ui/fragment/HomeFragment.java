@@ -1,9 +1,11 @@
 package com.eshen.voucherunion.ui.fragment;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -13,6 +15,7 @@ import com.eshen.voucherunion.base.BaseFragment;
 import com.eshen.voucherunion.model.domain.Categories;
 import com.eshen.voucherunion.presenter.IHomePresenter;
 import com.eshen.voucherunion.ui.activity.IMainActivity;
+import com.eshen.voucherunion.ui.activity.ScanQrCodeActivity;
 import com.eshen.voucherunion.ui.adapter.HomePageAdapter;
 import com.eshen.voucherunion.utils.PresenterManager;
 import com.eshen.voucherunion.view.IHomeCallback;
@@ -35,6 +38,8 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
 
     @BindView(R.id.home_search_input_box)
     public EditText searchInputBox;
+    @BindView(R.id.scan_icon)
+    public ImageView scanBtn;
 
     @Override
     protected int getRootViewResId() {
@@ -71,6 +76,13 @@ public class HomeFragment extends BaseFragment implements IHomeCallback {
                 if (activity instanceof IMainActivity) {
                     ((IMainActivity) activity).switch2Search();
                 }
+            }
+        });
+        scanBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转到扫码界面
+                startActivity(new Intent(getContext(), ScanQrCodeActivity.class));
             }
         });
     }

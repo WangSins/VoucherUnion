@@ -168,6 +168,9 @@ public class SearchFragment extends BaseFragment implements ISearchPageCallback 
                 if (hasInput(false)) {
                     //如果有输入内容搜索
                     toSearch(searchInputBox.getText().toString().trim());
+                }else {
+                    //回到历史记录界面
+                    switch2HistoryPage();
                 }
                 KeyboardUtil.hide(getContext(), v);
             }

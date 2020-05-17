@@ -39,9 +39,9 @@
         <ImageView
             android:id="@+id/scan_icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:src="@mipmap/scan_white" />
 
     </LinearLayout>

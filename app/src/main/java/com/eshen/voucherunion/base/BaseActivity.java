@@ -19,6 +19,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
+//        ColorMatrix cm = new ColorMatrix();
+//        cm.setSaturation(0);
+//        Paint paint = new Paint();
+//        paint.setColorFilter(new ColorMatrixColorFilter(cm));
+//        View decorView = getWindow().getDecorView();
+//        decorView.setLayerType(View.LAYER_TYPE_SOFTWARE,paint);
         bind = ButterKnife.bind(this);
         initView();
         initEvent();

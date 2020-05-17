@@ -28,6 +28,9 @@
         <activity android:name=".ui.activity.TestActivity">
 
         </activity>
+        <activity android:name=".ui.activity.ScanQrCodeActivity">
+
+        </activity>
     </application>
 
 </manifest>
