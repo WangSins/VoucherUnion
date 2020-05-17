@@ -28,56 +28,71 @@
             android:textSize="20sp" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="35dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/ticket_cover"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBackground"
-            apps:src="@mipmap/ic_launcher" />
-
-        <com.eshen.voucherunion.ui.custom.LoadingView
-            android:id="@+id/ticket_cover_loading"
-            android:layout_width="33dp"
-            android:layout_height="33dp"
-            android:layout_centerInParent="true" />
-
-        <TextView
-            android:id="@+id/ticket_cover_retry"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="加载出错，请点击重试"
-            android:textSize="14sp"
-            android:visibility="gone" />
-    </RelativeLayout>
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_marginTop="35dp">
+
+                <ImageView
+                    android:id="@+id/ticket_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorBackground"
+                    apps:src="@mipmap/ic_launcher" />
+
+                <com.eshen.voucherunion.ui.custom.LoadingView
+                    android:id="@+id/ticket_cover_loading"
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
+                    android:layout_centerInParent="true" />
+
+                <TextView
+                    android:id="@+id/ticket_cover_retry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="加载出错，请点击重试"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
 
 
-    <EditText
-        android:id="@+id/ticket_code"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/shape_ticket_code_bg"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:gravity="center"
-        android:textColor="#4A4A4A"
-        apps:text="￥xhQoYC66sMX￥" />
+            <EditText
+                android:id="@+id/ticket_code"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/shape_ticket_code_bg"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:gravity="center"
+                android:textColor="#4A4A4A"
+                apps:text="￥xhQoYC66sMX￥" />
 
-    <TextView
-        android:id="@+id/ticket_copy_or_open_button"
-        android:layout_width="140dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/shape_button_bg"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        apps:text="领券" />
+            <TextView
+                android:id="@+id/ticket_copy_or_open_button"
+                android:layout_width="140dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="35dp"
+                android:background="@drawable/shape_button_bg"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                apps:text="领券" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
