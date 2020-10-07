@@ -26,6 +26,7 @@ import com.eshen.voucherunion.base.BaseActivity;
 import com.eshen.voucherunion.model.domain.TicketResult;
 import com.eshen.voucherunion.presenter.ITicketPagePresenter;
 import com.eshen.voucherunion.utils.PresenterManager;
+import com.eshen.voucherunion.utils.TicketUtil;
 import com.eshen.voucherunion.utils.ToastUtils;
 import com.eshen.voucherunion.utils.UrlUtils;
 import com.eshen.voucherunion.view.ITicketPageCallback;
@@ -157,7 +158,9 @@ public class TicketActivity extends BaseActivity implements ITicketPageCallback 
             }
         }
         if (codeEt != null && result.getData().getTbk_tpwd_create_response() != null) {
-            codeEt.setText(result.getData().getTbk_tpwd_create_response().getData().getModel());
+            String model = result.getData().getTbk_tpwd_create_response().getData().getModel();
+            String ticketCode = TicketUtil.getTicketCode(model);
+            codeEt.setText(ticketCode);
         }
     }
 

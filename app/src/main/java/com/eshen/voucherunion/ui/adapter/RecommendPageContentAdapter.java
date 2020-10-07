@@ -16,6 +16,7 @@ import com.eshen.voucherunion.R;
 import com.eshen.voucherunion.model.domain.IBaseInfo;
 import com.eshen.voucherunion.model.domain.RecommendContent;
 import com.eshen.voucherunion.utils.Constant;
+import com.eshen.voucherunion.utils.UrlUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
  */
 public class RecommendPageContentAdapter extends RecyclerView.Adapter<RecommendPageContentAdapter.InnerHolder> {
 
-    private List<RecommendContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean> data = new ArrayList<>();
+    private List<RecommendContent.DataBean.TbkDgOptimusMaterialResponseBean.ResultListBean.MapDataBean> data = new ArrayList<>();
     private OnSelectedPageContentItemClickListener itemClickListener;
 
     @NonNull
@@ -40,7 +41,7 @@ public class RecommendPageContentAdapter extends RecyclerView.Adapter<RecommendP
 
     @Override
     public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
-        RecommendContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean itemBean = this.data.get(position);
+        RecommendContent.DataBean.TbkDgOptimusMaterialResponseBean.ResultListBean.MapDataBean itemBean = this.data.get(position);
         holder.setData(itemBean);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +60,7 @@ public class RecommendPageContentAdapter extends RecyclerView.Adapter<RecommendP
 
     public void setData(RecommendContent content) {
         if (content.getCode() == Constant.SUCCESS_CODE) {
-            List<RecommendContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean> data = content.getData().getTbk_uatm_favorites_item_get_response().getResults().getUatm_tbk_item();
+            List<RecommendContent.DataBean.TbkDgOptimusMaterialResponseBean.ResultListBean.MapDataBean> data = content.getData().getTbk_dg_optimus_material_response().getResult_list().getMap_data();
             this.data.clear();
             this.data.addAll(data);
             notifyDataSetChanged();
@@ -88,10 +89,10 @@ public class RecommendPageContentAdapter extends RecyclerView.Adapter<RecommendP
             ButterKnife.bind(this, itemView);
         }
 
-        public void setData(RecommendContent.DataBean.TbkUatmFavoritesItemGetResponseBean.ResultsBean.UatmTbkItemBean itemBean) {
+        public void setData(RecommendContent.DataBean.TbkDgOptimusMaterialResponseBean.ResultListBean.MapDataBean itemBean) {
             Context context = itemView.getContext();
-
-            Glide.with(context).load(itemBean.getPict_url()).into(coverIv);
+            String coverPath = UrlUtils.getCoverPath(itemBean.getPict_url());
+            Glide.with(context).load(coverPath).into(coverIv);
             if (TextUtils.isEmpty(itemBean.getCoupon_info())) {
                 offPriseTv.setVisibility(View.GONE);
             } else {

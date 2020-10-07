@@ -20,4 +20,12 @@ public class TicketUtil {
         ticketPagePresenter.getTicket(url, title, cover);
         context.startActivity(new Intent(context, TicketActivity.class));
     }
+
+    public static String getTicketCode(String model) {
+        if (model.startsWith("￥") && model.endsWith("￥")) {
+            return model;
+        } else {
+            return model.substring(model.indexOf("￥"), model.lastIndexOf("￥") + 1);
+        }
+    }
 }
